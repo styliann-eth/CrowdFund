@@ -1,4 +1,4 @@
-## :whale: DeWhale.capital Private Investment Round contract :whale:
+## :whale: DeWhale.capital Private Rounds contract :whale:
 
 ## Getting started
 
