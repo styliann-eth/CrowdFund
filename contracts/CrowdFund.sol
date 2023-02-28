@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-pragma solidity ^0.8.9;
+pragma solidity 0.8.9;
 
 /// @title PrivateInvestmentRound - DeWhales.capital members pledge eth in exchange for tokens
 /// @author styliann.eth <ns2808@proton.me>
@@ -196,10 +196,16 @@ contract CrowdFund is AccessControl {
     ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         Round storage round = rounds[_roundId];
 
-        IERC20(_tokenAddress).transferFrom(msg.sender, address(this), _amount);
+        bool receivedTokens = IERC20(_tokenAddress).transferFrom(
+            msg.sender,
+            address(this),
+            _amount
+        );
 
-        round.totalTokensReceived = _amount;
-        round.tokenAddress = _tokenAddress;
+        if (receivedTokens) {
+            round.totalTokensReceived = _amount;
+            round.tokenAddress = _tokenAddress;
+        }
     }
 
     function claimTokens(uint _roundId) external {
@@ -214,8 +220,14 @@ contract CrowdFund is AccessControl {
         uint tokensToBeClaimed = (pledgedEthAmount *
             round.totalTokensReceived) / round.totalEthPledged;
 
-        IERC20(round.tokenAddress).transfer(msg.sender, tokensToBeClaimed);
-
         pledgedAmounts[_roundId][msg.sender] = 0;
+        bool sentTokens = IERC20(round.tokenAddress).transfer(
+            msg.sender,
+            tokensToBeClaimed
+        );
+
+        if (!sentTokens) {
+            pledgedAmounts[_roundId][msg.sender] = pledgedEthAmount;
+        }
     }
 }

@@ -1,5 +1,7 @@
 {
-  "name": "dewhales-crowdfund",
+  "name": "private-rounds",
+  "version": "1.0.0",
+  "author": "styliann.eth <ns2808@proton.me> (https://twitter.com/Styliann_/)",
   "scripts": {
     "build": "npx thirdweb@latest detect",
     "deploy": "npx thirdweb@latest deploy",
