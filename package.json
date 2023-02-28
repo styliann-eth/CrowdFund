@@ -1,14 +1,20 @@
 {
-  "name": "hardhat-javascript-starter",
+  "name": "dewhales-crowdfund",
   "scripts": {
     "build": "npx thirdweb@latest detect",
     "deploy": "npx thirdweb@latest deploy",
     "release": "npx thirdweb@latest release"
   },
   "devDependencies": {
+    "@nomiclabs/hardhat-waffle": "^2.0.5",
+    "chai": "^4.3.7",
     "hardhat": "^2.10.1"
   },
   "dependencies": {
-    "@thirdweb-dev/contracts": "^3"
+    "@nomicfoundation/hardhat-toolbox": "^2.0.1",
+    "@nomiclabs/hardhat-ethers": "^2.2.2",
+    "@openzeppelin/contracts": "^4.8.1",
+    "@thirdweb-dev/contracts": "^3",
+    "ethers": "5.7.0"
   }
 }
