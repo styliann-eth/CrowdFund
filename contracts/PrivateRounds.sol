@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity 0.8.9;
 
-/// @title PrivateInvestmentRound - DeWhales.capital members pledge eth in exchange for tokens
+/// @title PrivateRounds - DEWHALE_ROLE holders pledge eth in exchange for tokens
 /// @author styliann.eth <ns2808@proton.me>
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 error InvalidRoundStartDate(uint startAt, uint blockTimestamp);
 error InvalidRoundEndDate(uint endAt, uint blockTimestamp);
 
-contract CrowdFund is AccessControl {
+contract PrivateRounds is AccessControl {
     event NewRoundCreated(
         uint32 roundId,
         uint goal,
