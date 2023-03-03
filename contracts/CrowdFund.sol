@@ -51,7 +51,7 @@ contract CrowdFund is AccessControl {
 
     constructor() {
         // Contract deployer gets DEFAULT_ADMIN_ROLE
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
     function createNewRound(
@@ -127,8 +127,9 @@ contract CrowdFund is AccessControl {
         (bool sent, ) = payable(msg.sender).call{value: amountToUnpledge}("");
 
         if (!sent) {
-            round.totalEthPledged += amountToUnpledge;
-            pledgedAmounts[_roundId][msg.sender] += amountToUnpledge;
+            revert("Tx unsuccessful");
+            // round.totalEthPledged += amountToUnpledge;
+            // pledgedAmounts[_roundId][msg.sender] += amountToUnpledge;
         }
 
         emit Unpledged(_roundId, msg.sender, amountToUnpledge);
@@ -149,7 +150,8 @@ contract CrowdFund is AccessControl {
         );
 
         if (!sent) {
-            round.isEthClaimed = false;
+            revert("Tx unsuccessful");
+            // round.isEthClaimed = false;
         }
 
         emit TotalClaimed(_roundId);
@@ -167,26 +169,11 @@ contract CrowdFund is AccessControl {
         (bool sent, ) = payable(msg.sender).call{value: balance}("");
 
         if (!sent) {
-            pledgedAmounts[_roundId][msg.sender] = balance;
+            revert("Tx unsuccessful");
+            // pledgedAmounts[_roundId][msg.sender] = balance;
         }
 
         emit InvestorRefunded(_roundId, msg.sender, balance);
-    }
-
-    function grantDeWhaleRole(
-        address[] calldata dewhaleAddresses
-    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        for (uint i = 0; i < dewhaleAddresses.length; i++) {
-            _grantRole(DEWHALE_ROLE, dewhaleAddresses[i]);
-        }
-    }
-
-    function revokeDeWhaleRole(
-        address[] calldata leaverAddresses
-    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        for (uint i = 0; i < leaverAddresses.length; i++) {
-            _revokeRole(DEWHALE_ROLE, leaverAddresses[i]);
-        }
     }
 
     function depositTokens(
@@ -202,10 +189,12 @@ contract CrowdFund is AccessControl {
             _amount
         );
 
-        if (receivedTokens) {
-            round.totalTokensReceived = _amount;
-            round.tokenAddress = _tokenAddress;
+        if (!receivedTokens) {
+            revert("Tx unsuccessful");
         }
+
+        round.totalTokensReceived = _amount;
+        round.tokenAddress = _tokenAddress;
     }
 
     function claimTokens(uint _roundId) external {
@@ -227,7 +216,8 @@ contract CrowdFund is AccessControl {
         );
 
         if (!sentTokens) {
-            pledgedAmounts[_roundId][msg.sender] = pledgedEthAmount;
+            revert("Tx unsuccessful");
+            // pledgedAmounts[_roundId][msg.sender] = pledgedEthAmount;
         }
     }
 }
