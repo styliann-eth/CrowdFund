@@ -10,6 +10,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 // Custom errors
 error InvalidRoundStartDate(uint startAt, uint blockTimestamp);
 error InvalidRoundEndDate(uint endAt, uint blockTimestamp);
+error TxUnsuccessful();
 
 contract PrivateRounds is AccessControl {
     event NewRoundCreated(
@@ -127,7 +128,7 @@ contract PrivateRounds is AccessControl {
         (bool sent, ) = payable(msg.sender).call{value: amountToUnpledge}("");
 
         if (!sent) {
-            revert("Tx unsuccessful");
+            revert TxUnsuccessful();
             // round.totalEthPledged += amountToUnpledge;
             // pledgedAmounts[_roundId][msg.sender] += amountToUnpledge;
         }
@@ -150,7 +151,7 @@ contract PrivateRounds is AccessControl {
         );
 
         if (!sent) {
-            revert("Tx unsuccessful");
+            revert TxUnsuccessful();
             // round.isEthClaimed = false;
         }
 
@@ -169,7 +170,7 @@ contract PrivateRounds is AccessControl {
         (bool sent, ) = payable(msg.sender).call{value: balance}("");
 
         if (!sent) {
-            revert("Tx unsuccessful");
+            revert TxUnsuccessful();
             // pledgedAmounts[_roundId][msg.sender] = balance;
         }
 
@@ -190,7 +191,7 @@ contract PrivateRounds is AccessControl {
         );
 
         if (!receivedTokens) {
-            revert("Tx unsuccessful");
+            revert TxUnsuccessful();
         }
 
         round.totalTokensReceived = _amount;
@@ -216,7 +217,7 @@ contract PrivateRounds is AccessControl {
         );
 
         if (!sentTokens) {
-            revert("Tx unsuccessful");
+            revert TxUnsuccessful();
             // pledgedAmounts[_roundId][msg.sender] = pledgedEthAmount;
         }
     }
