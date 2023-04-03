@@ -2,9 +2,10 @@
 
 ### Deployments
 
-- BSC Testnet: https://thirdweb.com/binance-testnet/0xbaE1808adBCf28802d655586dc186167602bDb46
+- BSC Testnet: https://thirdweb.com/binance-testnet/0xd8b15A9464b183A7ca2923cb4d9510651F10aA42
 - BNB Chain Mainnet: -
 - Arbitrum: -
+- Polygon: -
 
 ## Getting started
 
@@ -20,7 +21,10 @@ Install all required node.js modules:
 yarn
 ```
 
-Take a look at the code in `contracts/PrivateRounds.sol`.
+Take a look at the code in:
+
+- `contracts/PrivateGroupFactory.sol`
+- `contracts/PrivateRounds.sol`
 
 ## Building the project
 
@@ -38,4 +42,10 @@ When you're ready to deploy your contracts, just run one of the following comman
 
 ```bash
 yarn deploy
+```
+
+From the root /private-rounds folder, use the following to test the subgraph:
+
+```bash
+node subgraph/sample-queries/index.js
 ```

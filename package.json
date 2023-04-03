@@ -5,7 +5,8 @@
   "scripts": {
     "build": "npx thirdweb@latest detect",
     "deploy": "npx thirdweb@latest deploy",
-    "release": "npx thirdweb@latest release"
+    "release": "npx thirdweb@latest release",
+    "timestamps": "node scripts/index.js"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-waffle": "^2.0.5",
@@ -15,6 +16,7 @@
   "dependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.1",
     "@nomiclabs/hardhat-ethers": "^2.2.2",
+    "@nomiclabs/hardhat-etherscan": "^3.1.7",
     "@openzeppelin/contracts": "^4.8.1",
     "@thirdweb-dev/contracts": "^3",
     "ethers": "5.7.0"
